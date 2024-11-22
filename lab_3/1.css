@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f4f4f9;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px; /* Ограничение ширины */
+}
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.result {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.result.success {
+    color: green;
+}
+
+.result.error {
+    color: red;
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Города с одинаковой первой буквой</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Найти города по первой букве</h1>
+        <label for="city">Введите название города:</label>
+        <input type="text" id="city" placeholder="Введите город">
+        <button onclick="findCitiesByFirstLetter()">Найти города</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const cities = ["Москва", "Санкт-Петербург", "Саратов", "Магадан", "Ярославль", "Самара", "Якутск"];
+
+        function findCitiesByFirstLetter() {
+            const cityInput = document.getElementById('city').value.trim();
+
+            if (!cityInput) {
+                document.getElementById('result').innerText = "Пожалуйста, введите название города!";
+                return;
+            }
+            const firstLetter = cityInput[0];
+            const matchingCities = cities.filter(city => city[0] === firstLetter);
+
+            const resultDiv = document.getElementById('result');
+            if (matchingCities.length > 0) {
+                resultDiv.innerText = `Города, начинающиеся с буквы '${firstLetter}': ${matchingCities.join(", ")}`;
+            } else {
+                resultDiv.innerText = "Такого города нет в списке";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies App</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div id="app">
+        <input v-model='searchQuery' placeholder="Поиск " class="search-input"/>
+        <div class="buttons">
+            <button v-on:click="sortBy('title')" class="sort-button">Сортировать по названию</button>
+            <button v-on:click="sortBy('ratings')" class="sort-button">Сортировать по рейтингу</button>
+        </div>
+        <ul class="movie-list">
+            <li v-for="(item, index) in filteredData" :key="index" class="movie-item">
+                <span class="movie-title">{{ item.title }}</span>  
+                <span class="movie-genre">{{ item.genre }}</span> 
+                <span class="movie-ratings">Рейтинги: {{ item.ratings }}</span>
+            </li>
+        </ul>
+    </div>
+
+    <script type="module" src="app.js"></script> 
+</body>
+</html>

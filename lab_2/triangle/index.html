@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка треугольника</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Проверка существования треугольника</h1>
+        <form id="triangle-form">
+            <label for="a">Сторона 1:</label>
+            <input type="number" id="a" placeholder="Введите длину" min="0" required>
+            <label for="b">Сторона 2:</label>
+            <input type="number" id="b" placeholder="Введите длину" min="0" required>
+            <label for="c">Сторона 3:</label>
+            <input type="number" id="c" placeholder="Введите длину" min="0" required>
+            <button type="button" onclick="checkTriangleExistence()">Проверить</button>
+        </form>
+        <div id="result">
+            <p id="answ"></p>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

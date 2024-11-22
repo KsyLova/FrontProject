@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Средняя цена товаров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h4 {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="products">Товары с ценами (через точку с запятой):</label>
+        <input type="text" id="products" placeholder="Например: картошка:45,70,81; творог:20,80,54; молоко:23,56,87">
+        
+        <button onclick="findCheapestProducts()">Найти товары с минимальной средней ценой</button>
+        
+        <h4>Результат:</h4>
+        <ul id="result"></ul>
+    </div>
+
+    <script>
+        function findCheapestProducts() {
+            const productsInput = document.getElementById('products').value;
+            const products = productsInput.split(';');
+
+            let productData = [];
+            products.forEach(product => {
+                const [name, prices] = product.split(':');
+                const priceList = prices.split(',').map(Number);
+                const avgPrice = priceList.reduce((sum, price) => sum + price, 0) / priceList.length;
+                productData.push({ name: name.trim(), avgPrice });
+            });
+
+            productData.sort((a, b) => {
+                if (a.avgPrice === b.avgPrice) {
+                    return a.name.localeCompare(b.name); 
+                }
+                return a.avgPrice - b.avgPrice; 
+            });
+
+            
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = '';
+
+            productData.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.name;
+                resultElement.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

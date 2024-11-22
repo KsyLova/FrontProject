@@ -1,0 +1,52 @@
+body{
+    background: url('passport.jpg');
+    background-repeat: no-repeat;
+    background-size: auto 550px;
+    background-position: 10% -10%;
+}
+#org{
+    position: absolute;
+    top: 90px;
+    left: 160px;
+}
+#date{
+    position: absolute;
+    top: 155px;
+    left: 160px;
+}
+#code{
+    position: absolute;
+    top: 155px;
+    left: 325px;
+}
+#surname{
+    position: absolute;
+    top: 340px;
+    left: 300px;
+}
+#name{
+    position: absolute;
+    top: 380px;
+    left: 300px;
+}
+#patronymic{
+    position: absolute;
+    top: 400px;
+    left: 300px;
+}
+#gender{
+    position: absolute;
+    top: 423px;
+    left: 230px;
+}
+#birth{
+    position: absolute;
+    top: 423px;
+    left: 340px;
+}
+#changeLang{
+    position: absolute;
+    top: 70px;
+    left: 550px;
+    background:grey;
+}

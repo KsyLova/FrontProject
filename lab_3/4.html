@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Низкокалорийный продукт</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        h3 {
+            text-align: center;
+        }
+
+        h4 {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Низкокалорийный продукт</h3>
+        <label for="products">Названия продуктов (через пробел):</label>
+        <input type="text" id="products" placeholder="Например: банан мандарин кефир">
+        
+        <label for="nutrition">Белки-жиры-углеводы (через пробел):</label>
+        <input type="text" id="nutrition" placeholder="Например: 120-130-190 156-182-190 120-145-90">
+        
+        <button onclick="findLowestCalorieProduct()">Найти низкокалорийный продукт</button>
+        
+        <h4>Результат:</h4>
+    </div>
+
+    <script>
+        function findLowestCalorieProduct() {
+            const productsInput = document.getElementById('products').value;
+            const nutritionInput = document.getElementById('nutrition').value;
+
+            const products = productsInput.split(' ').map(product => product.trim());
+            const nutritionList = nutritionInput.split(' ');
+
+            if (products.length !== nutritionList.length) {
+                document.getElementById('result').innerText = 'Ошибка: количество продуктов не соответствует количеству строк с нутриентами.';
+                document.getElementById('result').style.color = 'red';
+                return;
+            }
+
+            let minCalories = Infinity;
+            let lowestCalorieProduct = '';
+
+            for (let i = 0; i < products.length; i++) {
+                const [proteins, fats, carbs] = nutritionList[i].split('-').map(Number);
+                const calories = 0.4 * proteins + 0.3 * fats + 0.3 * carbs;
+
+                if (calories < minCalories) {
+                    minCalories = calories;
+                    lowestCalorieProduct = products[i];
+                }
+            }
+
+            document.getElementById('result').innerText = `Самый низкокалорийный продукт: ${lowestCalorieProduct}`;
+            document.getElementById('result').style.color = 'green';
+        }
+    </script>
+</body>
+</html>

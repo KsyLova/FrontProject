@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Угадайка</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4>Угадайка</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="from" class="form-label">От:</label>
+                            <input id="from" type="number" class="form-control" placeholder="Минимальное число">
+                        </div>
+                        <div class="mb-3">
+                            <label for="to" class="form-label">До:</label>
+                            <input id="to" type="number" class="form-control" placeholder="Максимальное число">
+                        </div>
+                        <button onclick="startGame()" class="btn btn-primary w-100">Загадать</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white text-center">
+                        <h4>Попробуйте угадать</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="guess" class="form-label">Ваше число:</label>
+                            <input id="guess" type="number" class="form-control" placeholder="Введите число">
+                        </div>
+                        <button onclick="checkGuess()" class="btn btn-success w-100">Проверить</button>
+                        <div id="message" class="mt-3 text-center fw-bold"></div>
+                        <div id="attempts" class="mt-2 text-center text-muted">Попытки: 3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let secretNumber;
+        let attemptsLeft = 3;
+
+        function startGame() {
+            const from = Number(document.getElementById('from').value);
+            const to = Number(document.getElementById('to').value);
+
+            const message = document.getElementById('message');
+            const attempts = document.getElementById('attempts');
+
+            if (!from || !to || from >= to) {
+                message.innerText = "Введите корректный интервал!";
+                message.className = "mt-3 text-center text-danger fw-bold";
+                return;
+            }
+
+            secretNumber = Math.floor(Math.random() * (to - from + 1)) + from;
+            attemptsLeft = 3;
+            message.innerText = "Число загадано! Попробуйте угадать.";
+            message.className = "mt-3 text-center text-success fw-bold";
+            attempts.innerText = "Попытки: 3";
+
+            document.getElementById('guess').value = "";
+        }
+
+        function checkGuess() {
+            if (secretNumber === undefined) {
+                const message = document.getElementById('message');
+                message.innerText = "Сначала загадайте число!";
+                message.className = "mt-3 text-center text-danger fw-bold";
+                return;
+            }
+
+            const guess = Number(document.getElementById('guess').value);
+
+            const message = document.getElementById('message');
+            const attempts = document.getElementById('attempts');
+
+            if (!guess && guess !== 0) {
+                message.innerText = "Введите число!";
+                message.className = "mt-3 text-center text-danger fw-bold";
+                return;
+            }
+
+            attemptsLeft--;
+
+            if (guess === secretNumber) {
+                message.innerText = "Поздравляем, вы угадали!";
+                message.className = "mt-3 text-center text-success fw-bold";
+                return;
+            } else if (attemptsLeft > 0) {
+                message.innerText = guess < secretNumber ? "Больше!" : "Меньше!";
+                message.className = "mt-3 text-center text-warning fw-bold";
+            } else {
+                message.innerText = `Вы проиграли! Загаданное число: ${secretNumber}`;
+                message.className = "mt-3 text-center text-danger fw-bold";
+            }
+
+            attempts.innerText = `Попытки: ${attemptsLeft}`;
+
+            if (attemptsLeft === 0) {
+                document.getElementById('guess').value = "";
+                document.getElementById('guess').disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>

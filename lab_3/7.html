@@ -1,0 +1,131 @@
+.<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Максимальное количество концертов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            text-align: center;
+        }
+
+        .content {
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            resize: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 10px auto;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h4 {
+            margin-top: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <label for="concerts">Введите данные о концертах (каждая запись с новой строки):</label>
+        <textarea id="concerts" placeholder="Например: Агата Кристи, 23.02.2023
+                                             Веселые программисты, 19.06.2023
+                                             Агата Кристи, 25.02.2023"></textarea>
+        
+        <button onclick="findMaxConcertGroup()">Найти группу с максимальным количеством концертов</button>
+        
+        <h4>Результат:</h4>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function findMaxConcertGroup() {
+            const concertsInput = document.getElementById('concerts').value;
+            const concertsLines = concertsInput.split('\n');
+            const concertCount = new Map(); 
+
+            for (const line of concertsLines) {
+                const trimmedLine = line.trim();
+                if (trimmedLine === "END") break;
+                const [group, date] = trimmedLine.split(',');
+                if (!group || !date) {
+                    document.getElementById('result').innerText = 'Ошибка: неверный формат данных.';
+                    document.getElementById('result').style.color = 'red';
+                    return;
+                }
+
+                const currentCount = concertCount.get(group) || 0;
+                concertCount.set(group, currentCount + 1);
+            }
+            let maxConcerts = -Infinity;
+            let maxConcertGroup = '';
+
+            for (const [group, count] of concertCount) {
+                if (count > maxConcerts) {
+                    maxConcerts = count;
+                    maxConcertGroup = group;
+                }
+            }
+
+            if (maxConcertGroup) {
+                document.getElementById('result').innerText = `${maxConcertGroup} ${maxConcerts}`;
+                document.getElementById('result').style.color = 'green';
+            } else {
+                document.getElementById('result').innerText = 'Нет данных для анализа.';
+                document.getElementById('result').style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies App</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div id="app">
+        <input id="search-input" placeholder="Поиск" class="search-input" />
+        <div class="buttons">
+            <button onclick="sortMovies('title')" class="sort-button">Сортировать по названию</button>
+            <button onclick="sortMovies('ratings')" class="sort-button">Сортировать по рейтингу</button>
+        </div>
+        <ul id="movie-list" class="movie-list"></ul>
+    </div>
+
+    <script src="app.js"></script> <!-- Основная логика -->
+</body>
+</html>

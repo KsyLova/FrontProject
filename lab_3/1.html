@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка на палиндром</title>
+    <link rel="stylesheet" href="1.css"> 
+</head>
+<body>
+    <div class="container">
+        <h3>Проверка на палиндром</h3>
+        <div class="input-group">
+            <input type="text" id="str" placeholder="Введите слово для проверки">
+            <button onclick="check_palindrome()">Проверить</button>
+        </div>
+        <div class="result" id="answ"></div>
+    </div>
+
+    <script>
+        function check_palindrome() {
+            let str = document.getElementById('str').value.trim().toLowerCase().replaceAll(' ', '');
+            let answ = document.getElementById('answ');
+            if (str === "") {
+                answ.innerText = "Пожалуйста, введите текст для проверки.";
+                answ.style.color = 'red';
+                return; 
+            }
+            
+            let res = '';
+            
+            for (let i = str.length - 1; i >= 0; i--) {
+                res = res + str[i];
+            }
+    
+            if (res === str) {
+                answ.innerText = "Да, это палиндром!";
+                answ.style.color = 'green';
+            } else {
+                answ.innerText = "Нет, это не палиндром!" ;
+                answ.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

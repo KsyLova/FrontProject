@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нахождение ученика с минимальным баллом</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h4 {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="names">Имена учеников (через запятую):</label>
+        <input type="text" id="names" placeholder="Например: Алина, Маша, Кристина">
+        
+        <label for="scores">Оценки (через пробел, оценки ученика через дефис):</label>
+        <input type="text" id="scores" placeholder="Например: 30-10-20 78-23-43 15-18-10">
+        
+        <button onclick="findLowestScoreStudent()">Найти ученика с минимальным баллом</button>
+        
+        <h4>Результат:</h4>
+    </div>
+
+    <script>
+        function findLowestScoreStudent() {
+            const namesInput = document.getElementById('names').value;
+            const scoresInput = document.getElementById('scores').value;
+            const names = namesInput.split(',').map(name => name.trim());
+            const scoresList = scoresInput.split(' ');
+
+            if (names.length !== scoresList.length) {
+                document.getElementById('result').innerText = 'Ошибка: количество учеников не соответствует количеству строк с оценками.';
+                document.getElementById('result').style.color = 'red';
+                return;
+            }
+
+            let minAverage = Infinity;
+            let lowestScoreStudent = '';
+
+
+            for (let i = 0; i < names.length; i++) {
+                const scores = scoresList[i].split('-').map(Number);
+                const average = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+
+               
+                if (average < minAverage) {
+                    minAverage = average;
+                    lowestScoreStudent = names[i];
+                }
+            }
+
+            // Выводим результат
+            document.getElementById('result').innerText = `Ученик с самым низким баллом: ${lowestScoreStudent}`;
+            document.getElementById('result').style.color = 'green';
+        }
+    </script>
+</body>
+</html>

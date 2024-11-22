@@ -1,0 +1,61 @@
+/* Основные стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8; /* Легкий фон */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Основной контейнер для контента */
+.main-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Заголовок и текст */
+h5 {
+    margin-bottom: 10px;
+    color: #444;
+    font-size: 18px;
+}
+
+/* Поле ввода числа */
+.input-field {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Кнопка */
+.btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Стиль для результата */
+.result {
+    font-size: 24px;
+    font-weight: bold;
+    color: #28a745; /* Зеленый для успешного результата */
+}

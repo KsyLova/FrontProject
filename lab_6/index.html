@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="add-movie">
+            <input v-model="newMovie" placeholder="Название фильма" class="add-input" />
+            <button v-on:click="addMovie" class="add-button">Добавить фильм</button>
+        </div>
+
+        <ul class="movie-list">
+            <li 
+                v-for="(item, index) in data" 
+                :key="index" 
+                :class="{ watched: item.watched }" 
+                class="movie-item"
+            >
+                <span class="movie-title">{{ item.title }}</span>
+                <div class="movie-buttons">
+                    <button v-on:click="markWatched(index)" class="watch-button">
+                        {{ item.watched ? 'Не просмотрен' : 'Просмотрен' }}
+                    </button>
+                    <button v-on:click="deleteMovie(index)" class="delete-button">Удалить</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
