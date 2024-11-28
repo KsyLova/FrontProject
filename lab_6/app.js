@@ -1,39 +1,43 @@
-import { createApp, ref, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import AddTodo from './components/AddTodo.js';
+import TodoList from './components/TodoList.js';
 
-createApp({
-    setup() {
-        const data = ref([]);
-        const newMovie = ref("");
-        onMounted(async () => {
-            const response = await fetch('movies.json');
-            const movies = await response.json();
-            data.value = movies.map(movie => ({ title: movie.title, watched: false }));
-        });
-        
-        const addMovie = () => {
-            const movieTitle = newMovie.value.trim();
-            if (movieTitle) {
-                data.value.push({ title: movieTitle, watched: false });
-                newMovie.value = ""; 
-            } else {
-                alert("Введите название фильма!");
-            }
-        };
-
-        const deleteMovie = (index) => {
-            data.value.splice(index, 1);
-        };
-
-        const markWatched = (index) => {
-            data.value[index].watched = !data.value[index].watched;
-        };
-
+const App = {
+    components: { AddTodo, TodoList },
+    data() {
         return {
-            data,
-            newMovie,
-            addMovie,
-            deleteMovie,
-            markWatched
+            todos: [
+                { text: 'Купить продукты', completed: false },
+                { text: 'Сделать зарядку', completed: false},
+                { text: 'Помыть полы', completed: false},
+                { text: 'Сходить в зал', completed: false},
+                { text: 'Протереть пыль', completed: false},
+            ],
         };
-    }
-}).mount('#app');
+    },
+    methods: {
+        addTodo(todoText) {
+            if (todoText.trim()) {
+                this.todos.push({ text: todoText.trim(), completed: false });
+            }
+        },
+        deleteTodo(index) {
+            this.todos.splice(index, 1);
+        },
+        toggleTodoStatus(index) {
+            this.todos[index].completed = !this.todos[index].completed;
+        },
+    },
+    template: `
+        <div>
+            <h1>Список дел</h1>
+            <AddTodo @add-todo="addTodo" />
+            <TodoList 
+                :todos="todos" 
+                @delete-todo="deleteTodo" 
+                @toggle-status="toggleTodoStatus" 
+            />
+        </div>
+    `,
+};
+
+Vue.createApp(App).mount('#app');
