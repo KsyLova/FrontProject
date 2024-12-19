@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валюты</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .error {
+            color: red;
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+
+        .currency-result p {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app"></div> 
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    city: "",  
+                    error: "",
+                    info: null, 
+                    region: "", 
+                    regions: ["USD", "GB", "EURO"], 
+                    isLoading: false, 
+                };
+            },
+            computed: {
+                cityName() {
+                    return "«" + this.city + "»"; 
+                },
+            },
+            watch: {
+               
+                city(newValue) {
+                    if (newValue <= 0 || newValue === "") {
+                        this.error = "Пожалуйста, введите корректную сумму (больше 0).";
+                        this.info = null; 
+                    } else {
+                        this.error = ""; 
+                        this.getSum(); 
+                    }
+                }
+            },
+            methods: {
+                getSum() {
+                    this.isLoading = true;
+                    
+                    axios.get(`https://api.coindesk.com/v1/bpi/currentprice.json`)
+                        .then(res => {
+                            this.info = res.data;  
+                            this.isLoading = false; 
+                        })
+                        .catch(err => {
+                            this.error = "Ошибка загрузки данных: " + err.message;  
+                            this.isLoading = false; 
+                        });
+                }
+            },
+            template: `
+                <div class="wrapper">
+                    <h1>Валюты</h1>
+                    <p>Узнать сумму покупки в разных валютах. {{ city == "" ? "" : "Ваша сумма: " + cityName }}</p>
+                    <input type="text" v-model="city" placeholder="Введите сумму" /> 
+                    <select v-model="region" required>
+                        <option value="" disabled>Выберите Валюту</option>
+                        <option v-for="region in regions" :key="region" :value="region">
+                            {{ region }}
+                        </option>
+                    </select>
+
+                    <!-- Компонент для отображения ошибок -->
+                    <ErrorDisplay v-if="error" :error="error" />
+
+                    <!-- Компонент для отображения валют -->
+                    <CurrencyResult v-if="info" :city="city" :region="region" :info="info" />
+                    
+                    <!-- Индикатор загрузки -->
+                    <div v-if="isLoading">
+                        <p>Загрузка...</p>
+                    </div>
+                </div>
+            `,
+            components: {
+                CurrencyResult: {
+                    props: ['city', 'region', 'info'],
+                    computed: {
+                        showUSD() {
+                            return this.city && this.info ? "Сумма в долларах: " + (this.city / 7479156 * this.info.bpi.USD.rate_float).toFixed(2) : "";
+                        },
+                        showFrank() {
+                            return this.city && this.info ? "Сумма в франках: " + (this.city / 7479156 * this.info.bpi.GBP.rate_float).toFixed(2) : "";
+                        },
+                        showEuro() {
+                            return this.city && this.info ? "Сумма в евро: " + (this.city / 7479156 * this.info.bpi.EUR.rate_float).toFixed(2) : "";
+                        },
+                    },
+                    template: `
+                        <div class="currency-result">
+                            <div v-if="region == 'USD'">
+                                <p>{{ showUSD }}</p>
+                            </div>
+                            <div v-if="region == 'GB'">
+                                <p>{{ showFrank }}</p>
+                            </div>
+                            <div v-if="region == 'EURO'">
+                                <p>{{ showEuro }}</p>
+                            </div>
+                        </div>
+                    `
+                },
+
+                ErrorDisplay: {
+                    props: ['error'],
+                    template: `
+                        <div class="error">
+                            <p>{{ error }}</p>
+                        </div>
+                    `
+                }
+            }
+        });
+    </script>
+</body>
+</html>
