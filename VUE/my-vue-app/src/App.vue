@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-      <!-- Вводная информация -->
       <div v-if="!testSelected" class="intro">
         <h1>Добро пожаловать в тестовый центр</h1>
         <p>
@@ -9,24 +8,24 @@
         </p>
       </div>
       
-      <!-- Выбор теста -->
+      
       <div v-if="!testSelected" class="test-selection">
         <button @click="selectTest('test1')" class="start-button">Тест 1</button>
         <button @click="selectTest('test2')" class="start-button">Тест 2</button>
         <button @click="selectTest('test3')" class="start-button">Тест 3</button>
       </div>
   
-      <!-- Тест 1 -->
+      
       <div v-if="testSelected === 'test1'">
         <Test1 @go-back="goBack" />
       </div>
   
-      <!-- Тест 2 -->
+      
       <div v-if="testSelected === 'test2'">
         <Test2 @go-back="goBack" />
       </div>
   
-      <!-- Тест 3 -->
+      
       <div v-if="testSelected === 'test3'">
         <Test3 @go-back="goBack" />
       </div>
@@ -46,34 +45,32 @@
     },
     data() {
       return {
-        testSelected: null, // Стейт для отслеживания выбранного теста
+        testSelected: null, 
       };
     },
     methods: {
       selectTest(test) {
-        this.testSelected = test; // Устанавливаем выбранный тест
+        this.testSelected = test; 
       },
       goBack() {
-        this.testSelected = null; // Сбрасываем выбор теста, чтобы вернуть пользователя к выбору тестов
+        this.testSelected = null; 
       },
     },
   };
   </script>
   
   <style scoped>
-  /* Основной контейнер */
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрирование по вертикали */
-    align-items: center; /* Центрирование по горизонтали */
-    height: 100vh; /* Полная высота экрана */
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
     text-align: center;
-    background: linear-gradient(to bottom right, #f0f0f0, #d9d9d9); /* Минималистичный градиент */
-    font-family: 'Arial', sans-serif; /* Простой шрифт */
+    background: linear-gradient(to bottom right, #f0f0f0, #d9d9d9); 
+    font-family: 'Arial', sans-serif;
   }
   
-  /* Вводная информация */
   .intro {
     margin-bottom: 20px;
     color: #333;
@@ -89,14 +86,14 @@
     color: #555;
   }
   
-  /* Выбор теста */
+  
   .test-selection {
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
   
-  /* Стиль для кнопок */
+  
   .start-button {
     padding: 15px 30px;
     font-size: 1.2rem;
@@ -119,7 +116,7 @@
     transform: scale(1);
   }
   
-  /* Для заголовка */
+  
   h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
@@ -147,7 +144,6 @@
   }
 }
 
-/* Медиазапросы для планшетов (до 768px) */
 @media (max-width: 768px) {
   .intro h1 {
     font-size: 2rem;

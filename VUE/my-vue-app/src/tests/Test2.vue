@@ -22,7 +22,7 @@
       <div v-if="resultVisible" class="result">
         <p>Время реакции: {{ reactionTime }} миллисекунд</p>
         <p>Оценка: {{ evaluation }}</p>
-        <button @click="retryTest" class="retry-button">Попробовать снова</button>
+        <button @click="startTest"class="start-button">Попробовать снова</button>
       </div>
 
       <button @click="goBack" class="back-button">Вернуться на главный экран</button>
@@ -176,22 +176,6 @@
     color: #333;
   }
   
-  .retry-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.2s;
-  }
-  
-  .retry-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
   
   .back-button {
     background-color: #f44336;

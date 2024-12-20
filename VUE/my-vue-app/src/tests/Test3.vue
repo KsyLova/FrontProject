@@ -3,7 +3,7 @@
       <div v-if="!testStarted && !testEnded" class="menu">
         <h1 class="test-title">Тест Струпа</h1>
         <p class="test-description">
-          Добро пожаловать! В этом тесте вам нужно выбрать правильное слово, которое соответствует цвету текста. У вас будет 60 секунд, чтобы ответить на максимальное количество вопросов.
+          Добро пожаловать! В этом тесте вам нужно выбрать правильное слово, которое соответствует цвету текста. У вас будет 10 секунд, чтобы ответить на максимальное количество вопросов.
         </p>
         <div class="button-container">
           <button @click="startTest" class="start-button">Начать тест</button>
@@ -53,7 +53,7 @@
         correctAnswers: 0,
         startTime: null,
         timerInterval: null,
-        remainingTime: 60, 
+        remainingTime: 10, 
         testStarted: false,
         testEnded: false,
         wordText: '',
@@ -68,20 +68,22 @@
       },
       updateTimer() {
         const elapsedTime = Date.now() - this.startTime;
-        this.remainingTime = Math.max(0, 60 - Math.floor(elapsedTime / 1000));
+        this.remainingTime = Math.max(0, 10 - Math.floor(elapsedTime / 1000));
   
         if (this.remainingTime <= 0) {
           this.endTest();
         }
       },
       startTest() {
+        clearInterval(this.timerInterval);
         this.testStarted = true;
         this.testEnded = false;
         this.correctAnswers = 0;
         this.startTime = Date.now();
+        this.remainingTime = 10; 
         this.timerInterval = setInterval(this.updateTimer, 1000); 
         this.nextQuestion();
-      },
+        },
       nextQuestion() {
         if (this.remainingTime <= 0) { 
           this.endTest();

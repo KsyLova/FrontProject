@@ -25,7 +25,7 @@
 
     <div v-if="testFinished" class="result">
       <p>{{ resultMessage }}</p>
-      <button @click="resetTest" class="reset-button">Пройти тест заново</button>
+      <button @click="resetTest" class="start-button">Попробовать снова</button>
     </div>
 
     <div class="button-container">
@@ -47,8 +47,8 @@ export default {
         { text: 'Какое из чисел не подходит к остальным: 2, 3, 5, 7, 9?', answers: ['9', '7', '5', '3'], correct: '9' },
         { text: 'Что не является геометрической фигурой: квадрат, треугольник, пирамида, клетка?', answers: ['клетка', 'пирамида', 'треугольник', 'квадрат'], correct: 'клетка' },
         { text: 'Какое слово не является синонимом для остальных: сильный, мощный, слабый, крепкий?', answers: ['слабый', 'крепкий', 'мощный', 'сильный'], correct: 'слабый' },
-        { text: 'Что будет следующим в ряду: 1, 4, 9, 16, ?', answers: ['25', '20', '30', '21'], correct: '25' },
-        { text: 'В каком из этих слов содержится 4 буквы: зима, лето, осень, весна?', answers: ['лето', 'зима', 'осень', 'весна'], correct: 'лето' },
+        { text: 'Что будет следующим в ряду: 1, 4, 9, 16, ?', answers: ['20', '25', '30', '21'], correct: '25' },
+        { text: 'Какое из следующих слов лишнее?', answers: ['море', 'озеро', 'капля', 'весна'], correct: 'весна' },
         { text: 'Что будет следующим в последовательности: 3, 6, 12, 24, ?', answers: ['48', '36', '72', '60'], correct: '48' }
       ],
       currentQuestionIndex: 0,
@@ -232,22 +232,6 @@ export default {
   margin-top: 20px;
 }
 
-.reset-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.2s;
-  }
-  
-  .reset-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
   @media (max-width: 768px) {
   .description h2 {
     font-size: 20px;
