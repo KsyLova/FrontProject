@@ -53,7 +53,7 @@
         correctAnswers: 0,
         startTime: null,
         timerInterval: null,
-        remainingTime: 10, 
+        remainingTime: 60, 
         testStarted: false,
         testEnded: false,
         wordText: '',
@@ -68,7 +68,7 @@
       },
       updateTimer() {
         const elapsedTime = Date.now() - this.startTime;
-        this.remainingTime = Math.max(0, 10 - Math.floor(elapsedTime / 1000));
+        this.remainingTime = Math.max(0, 60 - Math.floor(elapsedTime / 1000));
   
         if (this.remainingTime <= 0) {
           this.endTest();
@@ -84,18 +84,21 @@
         this.timerInterval = setInterval(this.updateTimer, 1000); 
         this.nextQuestion();
         },
-      nextQuestion() {
+        nextQuestion() {
         if (this.remainingTime <= 0) { 
-          this.endTest();
-          return;
+            this.endTest();
+            return;
         }
-  
         const currentWord = this.words[Math.floor(Math.random() * this.words.length)];
         this.wordText = currentWord.text;
+        
         this.wordColor = this.words[Math.floor(Math.random() * this.words.length)].color;
-  
-        this.options = this.shuffle([...this.words]);
-      },
+        
+        this.shuffle(this.words);
+        
+        this.options = this.words;
+        },
+
       checkAnswer(selectedText) {
         if (selectedText === this.wordText) {
           this.correctAnswers++;
